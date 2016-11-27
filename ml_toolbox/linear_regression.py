@@ -15,6 +15,8 @@ class LinearRegression(object):
 		J_grad = lambda t: LinearRegression.cost_grad(self.X,self.y,t)
 		batch = gradient_descent.Batch(J,J_grad,self.rate,self.max_iterations)
 		self.theta = batch.minimize(inital_guess)
+	def train_normal_equation(self):
+		self.theta = np.dot(np.dot(numpy.linalg.pinv(np.dot(np.transpose(self.X), self.X)), np.transpose(self.X)), self.y)
 	def predict(self, x0):
 		x0 = np.insert(x0,0,1.0)
 		return x0*self.theta
