@@ -9,6 +9,9 @@ class LinearRegression(object):
 		self.learning_rate = rate
 		self.max_iters = max_iterations
 		self.m, self.n = data_table.shape
+	def predict(self, x0):
+		x0 = np.insert(x0,0,1.0)
+		return x0*self.theta
 	@staticmethod
 	def cost(X, y, theta):
 		return sum((np.dot(X,theta)-y)**2)/(2.0*X.shape[0])
