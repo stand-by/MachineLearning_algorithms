@@ -7,4 +7,6 @@ class LinearRegression(object):
 		self.learning_rate = rate
 		self.max_iters = max_iterations
 		self.m, self.n = data_table.shape
-	
+	@staticmethod
+	def cost(X, y, theta):
+		return sum((np.dot(X,theta)-y)**2)/(2.0*X.shape[0])
