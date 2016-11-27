@@ -9,6 +9,12 @@ class LinearRegression(object):
 		self.learning_rate = rate
 		self.max_iters = max_iterations
 		self.m, self.n = data_table.shape
+	def train_batch(self, inital_guess):
+		self.X = np.insert(self.X,0,np.ones(m),1)
+		J = lambda t: LinearRegression.cost(self.X,self.y,t)
+		J_grad = lambda t: LinearRegression.cost_grad(self.X,self.y,t)
+		batch = gradient_descent.Batch(J,J_grad,self.rate,self.max_iterations)
+		self.theta = batch.minimize(inital_guess)
 	def predict(self, x0):
 		x0 = np.insert(x0,0,1.0)
 		return x0*self.theta
