@@ -9,12 +9,10 @@ class LinearRegression(object):
 		self.minimization_trace = None
 		self.X = np.insert(self.X,0,np.ones(self.m),1)
 		self.m, self.n = X.shape
-	def train_batch(self, rate, max_iters, inital_guess):
-		learning_rate = rate
-		max_iterations = max_iters
+	def train_batch(self, rate, tolerance, max_iters, inital_guess):
 		J = lambda t: LinearRegression.cost(self.X,self.y,t)
 		J_grad = lambda t: LinearRegression.cost_grad(self.X,self.y,t)
-		batch = gradient_descent.Batch(J,J_grad,learning_rate,max_iterations)
+		batch = gradient_descent.Batch(J,J_grad,rate,tolerance,max_iters)
 		self.minimization_trace = batch.minimize(inital_guess)
 		self.theta = minimization_trace[0]
 	def train_normal_equation(self):
