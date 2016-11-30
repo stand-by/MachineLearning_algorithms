@@ -6,7 +6,7 @@ class Batch(object):
 	also, constructor takes learning rate and maximum number of iterations to converge.
 	Minimize method simply takes initial point to start descent and returns local optimum.
 	"""
-	def __init__(self, func, grad, rate, num_iter):
+	def __init__(self, func, grad, rate, tolerance, max_iters):
 		"""
 		func=your callable function that takes np.array and returns np.array;
 		grad=callable gradient to your function that takes np.array and returns np.array
@@ -15,8 +15,9 @@ class Batch(object):
 		"""
 		self.function = func
 		self.gradient = grad
-		self.iterations = num_iter
+		self.max_iterations = max_iters
 		self.learning_rate = rate
+		self.tolerance = tolerance
 	def minimize(self, initial_guess):
 		x = initial_guess
 		for i in range(self.iterations):
