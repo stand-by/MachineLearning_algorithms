@@ -2,19 +2,19 @@ import gradient_descent
 import numpy as np
 
 class LinearRegression(object):
-	def __init__(self, data_table, answers, rate, max_iters): #add tolerance parameter
+	def __init__(self, data_table, answers):
 		self.X = data_table
 		self.y = answers
 		self.theta = None
 		self.minimization_trace = None
-		self.learning_rate = rate
-		self.max_iterations = max_iters
 		self.X = np.insert(self.X,0,np.ones(self.m),1)
 		self.m, self.n = X.shape
-	def train_batch(self, inital_guess):
+	def train_batch(self, rate, max_iters, inital_guess):
+		learning_rate = rate
+		max_iterations = max_iters
 		J = lambda t: LinearRegression.cost(self.X,self.y,t)
 		J_grad = lambda t: LinearRegression.cost_grad(self.X,self.y,t)
-		batch = gradient_descent.Batch(J,J_grad,self.learning_rate,self.max_iterations)
+		batch = gradient_descent.Batch(J,J_grad,learning_rate,max_iterations)
 		self.minimization_trace = batch.minimize(inital_guess)
 		self.theta = minimization_trace[0]
 	def train_normal_equation(self):
