@@ -20,7 +20,9 @@ class Batch(object):
 		self.tolerance = tolerance
 	def minimize(self, initial_guess):
 		x = initial_guess
-		for i in range(self.iterations):
+		for i in range(self.max_iterations):
+			x_prev = x
 			x = x - self.learning_rate*self.gradient(x)
+			if (np.abs(x_prev-x) < eps).all(): break
 		return {'x_max': x, 'y_max': self.function(x)}
 		
