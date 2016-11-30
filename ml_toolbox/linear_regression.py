@@ -7,14 +7,14 @@ class LinearRegression(object):
 		self.y = answers
 		self.theta = None
 		self.minimization_trace = None
+		self.m, self.n = self.X.shape
 		self.X = np.insert(self.X,0,np.ones(self.m),1)
-		self.m, self.n = X.shape
 	def train_batch(self, rate, tolerance, max_iters, inital_guess):
 		J = lambda t: LinearRegression.cost(self.X,self.y,t)
 		J_grad = lambda t: LinearRegression.cost_grad(self.X,self.y,t)
 		batch = gradient_descent.Batch(J,J_grad,rate,tolerance,max_iters)
 		self.minimization_trace = batch.minimize(inital_guess)
-		self.theta = minimization_trace[0]
+		self.theta = self.minimization_trace[0]
 	def train_normal_equation(self):
 		self.theta = np.dot(np.dot(np.linalg.pinv(np.dot(np.transpose(self.X), self.X)), np.transpose(self.X)), self.y)
 	def predict(self, x0):
