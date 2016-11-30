@@ -6,6 +6,7 @@ class LinearRegression(object):
 		self.X = data_table
 		self.y = answers
 		self.theta = None
+		self.minimization_trace = None
 		self.learning_rate = rate
 		self.max_iterations = max_iters
 		self.m, self.n = data_table.shape
@@ -14,9 +15,8 @@ class LinearRegression(object):
 		J = lambda t: LinearRegression.cost(self.X,self.y,t)
 		J_grad = lambda t: LinearRegression.cost_grad(self.X,self.y,t)
 		batch = gradient_descent.Batch(J,J_grad,self.learning_rate,self.max_iterations)
-		#self.theta = batch.minimize(inital_guess)
-		from scipy.optimize import minimize
-		self.theta = minimize(J,np.array([10.0,10.0]),jac=J_grad)
+		self.minimization_trace = batch.minimize(inital_guess)
+		self.theta = minimization_trace[0]
 	def train_normal_equation(self):
 		self.theta = np.dot(np.dot(np.linalg.pinv(np.dot(np.transpose(self.X), self.X)), np.transpose(self.X)), self.y)
 	def predict(self, x0):
