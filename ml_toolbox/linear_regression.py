@@ -9,8 +9,8 @@ class LinearRegression(object):
 		self.minimization_trace = None
 		self.learning_rate = rate
 		self.max_iterations = max_iters
-		self.m, self.n = data_table.shape
 		self.X = np.insert(self.X,0,np.ones(self.m),1)
+		self.m, self.n = X.shape
 	def train_batch(self, inital_guess):
 		J = lambda t: LinearRegression.cost(self.X,self.y,t)
 		J_grad = lambda t: LinearRegression.cost_grad(self.X,self.y,t)
