@@ -31,8 +31,20 @@ class BatchTest(unittest.TestCase):
 		print(res_scipy)
 		self.assertTrue(np.abs(res_batch[2][-1]-res_scipy.fun) < self.eps)
 		self.assertTrue((np.abs(res_batch[0]-res_scipy.x) < self.eps).all())
+	def test_minimize_lst(self):
+		print("\ntest_minimize_lst running")
+		raw_data = open("../../crickets_vs_temperature.csv").read().split('\r\n')
+		input_label, output_label = raw_data[0].split(',')
+		del raw_data[0]
+		raw_data = [line.split(',') for line in raw_data]
+		raw_data = [[float(pair[0]), float(pair[1])] for pair in raw_data]
+		raw_data = np.array(raw_data)
+		X = raw_data[:,0]
+		y = raw_data[:,1]
+		X = np.array([X]).T #make it column vector
+		
 
-
+		
 if __name__ == "__main__": 
     unittest.main()
     
