@@ -1,3 +1,5 @@
+import numpy as np
+
 class Batch(object):
 	"""
 	Batch class provides simple interface to gradient descent which is able to find local optimum.
@@ -21,12 +23,12 @@ class Batch(object):
 	def minimize(self, initial_guess):
 		x = initial_guess
 		x_hist = [x]
-		f_hist = [function(x)]
+		f_hist = [self.function(x)]
 		for i in range(self.max_iterations):
 			x_prev = x
 			x = x - self.learning_rate*self.gradient(x)
 			x_hist.append(x)
-			f_hist.append(function(x))
-			if (np.abs(x_prev-x) < tolerance).all(): break
-		return (x,x_hist,f_hist)
+			f_hist.append(self.function(x))
+			if (np.abs(x_prev-x) < self.tolerance).all(): break
+		return (x,np.array(x_hist),np.array(f_hist))
 		
