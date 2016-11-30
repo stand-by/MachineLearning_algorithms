@@ -20,6 +20,7 @@ class Batch(object):
 		self.max_iterations = max_iters
 		self.learning_rate = rate
 		self.tolerance = tolerance
+		self.x_min = None
 	def minimize(self, initial_guess):
 		x = initial_guess
 		x_hist = [x]
@@ -30,5 +31,6 @@ class Batch(object):
 			x_hist.append(x)
 			f_hist.append(self.function(x))
 			if (np.abs(x_prev-x) < self.tolerance).all(): break
+		self.x_min = x
 		return (x,np.array(x_hist),np.array(f_hist))
 		
