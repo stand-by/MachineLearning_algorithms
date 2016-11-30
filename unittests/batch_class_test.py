@@ -31,18 +31,21 @@ class BatchTest(unittest.TestCase):
 		print(res_scipy)
 		self.assertTrue(np.abs(res_batch[2][-1]-res_scipy.fun) < self.eps)
 		self.assertTrue((np.abs(res_batch[0]-res_scipy.x) < self.eps).all())
-	def test_minimize_lst(self):
-		print("\ntest_minimize_lst running")
-		raw_data = open("../../crickets_vs_temperature.csv").read().split('\r\n')
-		input_label, output_label = raw_data[0].split(',')
-		del raw_data[0]
-		raw_data = [line.split(',') for line in raw_data]
-		raw_data = [[float(pair[0]), float(pair[1])] for pair in raw_data]
-		raw_data = np.array(raw_data)
-		X = raw_data[:,0]
-		y = raw_data[:,1]
-		X = np.array([X]).T #make it column vector
-		
+	def test_minimize_weirdfunc(self):
+		def f(x):
+			#(1-x)^2+100*(x-y)^2
+			return (1-x[0])**2+100*((x[0]-x[1])**2)
+		def grad_f(x):
+			dx1 = 2*(1-x[0])+200*(x[0]-x[1])
+			dx2 = -200*(x[0]-x[1])
+			return np.array([dx1,dx2])
+		gd = gradient_descent.Batch(f, grad_f, 0.1, self.eps/float(10), 1000)
+		res_batch = gd.minimize(np.array([0.0,0.0]))
+		print(res_batch[0])
+		res_scipy = minimize(f, np.array([10.0,10.0]))
+		print(res_scipy)
+		self.assertTrue(np.abs(res_batch[2][-1]-res_scipy.fun) < self.eps)
+		self.assertTrue((np.abs(res_batch[0]-res_scipy.x) < self.eps).all())
 
 		
 if __name__ == "__main__": 
