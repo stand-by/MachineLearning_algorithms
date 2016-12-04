@@ -12,3 +12,8 @@ class LogisticRegression(object):
 		self.minimization_trace = None
 		self.X = np.insert(self.X,0,np.ones(self.m),1)
 		self.m, self.n = self.X.shape
+
+
+	@staticmethod
+	def hypothesis(X, theta):
+		return sigmoid(np.dot(X,theta))
