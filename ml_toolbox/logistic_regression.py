@@ -12,8 +12,13 @@ class LogisticRegression(object):
 		self.minimization_trace = None
 		self.X = np.insert(self.X,0,np.ones(self.m),1)
 		self.m, self.n = self.X.shape
-
-
+	def train_batch(self, rate, tolerance, max_iters, inital_guess):
+		J = lambda t: LogisticRegression.cost(self.X,self.y,t)
+		J_grad = lambda t: LogisticRegression.cost_grad(self.X,self.y,t)
+		#temporary use of scipy
+		from scipy.optimize import minimize
+		res_scipy = minimize(J, inital_guess, jac=J_grad)
+		self.theta = res_scipy.x
 	@staticmethod
 	def hypothesis(X, theta):
 		return sigmoid(np.dot(X,theta))
