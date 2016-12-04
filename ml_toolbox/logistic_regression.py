@@ -1,5 +1,6 @@
 import gradient_descent
 import numpy as np
+from scipy import optimize
 
 def sigmoid(x):
 	return 1.0/(1+np.exp(-x))
@@ -18,6 +19,10 @@ class LogisticRegression(object):
 		batch = gradient_descent.Batch(J, J_grad, rate, tolerance, max_iters)
 		self.minimization_trace = batch.minimize(inital_guess)
 		self.theta = self.minimization_trace[0]
+	def train_nelder_mead(self, max_iters, inital_guess):
+		J = lambda t: LogisticRegression.cost(self.X,self.y,t)
+		J_grad = lambda t: LogisticRegression.cost_grad(self.X,self.y,t)
+		self.theta = optimize.fmin(J, x0=inital_guess, maxiter=max_iters, full_output=False, disp=False)
 	@staticmethod
 	def hypothesis(X, theta):
 		return sigmoid(np.dot(X,theta))
