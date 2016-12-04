@@ -1,6 +1,9 @@
 import gradient_descent
 import numpy as np
 
+def sigmoid(x):
+	return 1.0/(1+np.exp(-x))
+
 class LogisticRegression(object):
 	def __init__(self, data_table, answers):
 		self.X = data_table
