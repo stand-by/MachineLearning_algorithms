@@ -24,7 +24,7 @@ class LogisticRegression(object):
 		return sigmoid(np.dot(X,theta))
 	@staticmethod
 	def cost(X, y, theta):
-		return (-np.dot(y,np.log(hypothesis(X,theta)))-np.dot((1-y),np.log(1-hypothesis(X,theta))))/float(X.shape[0])
+		return (np.dot(-y.T,np.log(LogisticRegression.hypothesis(X,theta)))-np.dot((1-y).T,np.log(1-LogisticRegression.hypothesis(X,theta))))/float(X.shape[0])
 	@staticmethod
 	def cost_grad(X, y, theta):
-		return np.dot(X.T, (hypothesis(X,theta)-y))/float(X.shape[0])
+		return np.dot(X.T, (LogisticRegression.hypothesis(X,theta)-y))/float(X.shape[0])
