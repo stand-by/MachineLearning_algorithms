@@ -10,7 +10,7 @@ class LogisticRegression(object):
 		self.y = answers
 		self.theta = None
 		self.minimization_trace = None
-		self.X = np.insert(self.X,0,np.ones(self.m),1)
+		self.X = np.insert(self.X,0,np.ones(self.X.shape[0]),1)
 		self.m, self.n = self.X.shape
 	def train_batch(self, rate, tolerance, max_iters, inital_guess):
 		J = lambda t: LogisticRegression.cost(self.X,self.y,t)
