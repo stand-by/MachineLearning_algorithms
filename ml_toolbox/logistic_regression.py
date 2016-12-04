@@ -15,10 +15,9 @@ class LogisticRegression(object):
 	def train_batch(self, rate, tolerance, max_iters, inital_guess):
 		J = lambda t: LogisticRegression.cost(self.X,self.y,t)
 		J_grad = lambda t: LogisticRegression.cost_grad(self.X,self.y,t)
-		#temporary use of scipy
-		from scipy.optimize import minimize
-		res_scipy = minimize(J, inital_guess, jac=J_grad)
-		self.theta = res_scipy.x
+		batch = gradient_descent.Batch(J, J_grad, rate, tolerance, max_iters)
+		self.minimization_trace = batch.minimize(inital_guess)
+		self.theta = self.minimization_trace[0]
 	@staticmethod
 	def hypothesis(X, theta):
 		return sigmoid(np.dot(X,theta))
