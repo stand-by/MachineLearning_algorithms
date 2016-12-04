@@ -23,6 +23,10 @@ class LogisticRegression(object):
 		J = lambda t: LogisticRegression.cost(self.X,self.y,t)
 		J_grad = lambda t: LogisticRegression.cost_grad(self.X,self.y,t)
 		self.theta = optimize.fmin(J, x0=inital_guess, maxiter=max_iters, full_output=False, disp=False)
+	def probability(self, x0):
+		x0 = np.insert(x0,0,1.0)
+		return LogisticRegression.hypothesis(x0,theta)
+
 	@staticmethod
 	def hypothesis(X, theta):
 		return sigmoid(np.dot(X,theta))
