@@ -40,3 +40,10 @@ def readfile_headed(filename, header_separator=',', body_separator=","):
 		lst = [float(word) for word in row]
 		dataset.append(lst)
 	return (labels, dataset)
+
+def map_to_degrees(X, k):
+	X_copy = np.copy(X)
+	for i in range(2,k+1):
+		tpl = (X_copy, np.power(X,i))
+		X_copy = np.hstack(tpl)
+	return X_copy
