@@ -41,9 +41,30 @@ def readfile_headed(filename, header_separator=',', body_separator=","):
 		dataset.append(lst)
 	return (labels, dataset)
 
+def polynomial_combiantion(x1col, x2col, degrees):
+	prohibited = np.hstack((np.array([x1col]).T,np.array([x2col]).T))
+	prohibited = map_to_degrees(prohibited,degrees)
+	out = np.ones((x1col.shape[0], 1))
+	for i in range(1, degrees+1):
+		for j in range(0, i+1):
+			term1 = x1col ** (i-j)
+			term2 = x2col ** (j)
+			term = (term1 * term2).reshape(term1.shape[0], 1)
+			if term.T.tolist()[0] in prohibited.T.tolist(): continue
+			out = np.hstack((out, term))
+	return out[:,1:]
 def map_to_degrees(X, k):
 	X_copy = np.copy(X)
 	for i in range(2,k+1):
 		tpl = (X_copy, np.power(X,i))
 		X_copy = np.hstack(tpl)
+	return X_copy
+def map_to_polynomial(X, k):
+	X_copy = np.copy(X)
+	n = X.shape[1]
+	for i in range(n):
+		for j in range(i+1,n):
+			mapped_term = polynomial_combiantion(X[:,i], X[:,j], k)
+			X_copy = np.hstack((X_copy,mapped_term))
+	X_copy = np.hstack((X_copy[:,n:], map_to_degrees(X,k)))
 	return X_copy
