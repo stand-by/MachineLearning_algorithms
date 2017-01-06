@@ -29,3 +29,14 @@ def readfile(filename, separator=','):
 		lst = [float(word) for word in row]
 		dataset.append(lst)
 	return dataset
+def readfile_headed(filename, header_separator=',', body_separator=","):
+	labels = []
+	dataset = []
+	f = open(filename)
+	labels = f.readline().rstrip().split(header_separator)
+	for line in f:
+		row = line.rstrip().split(body_separator)
+		if row==['']: continue
+		lst = [float(word) for word in row]
+		dataset.append(lst)
+	return (labels, dataset)
