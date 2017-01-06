@@ -1,4 +1,5 @@
 import gradient_descent
+import functools
 import numpy as np
 
 class LinearRegression(object):
@@ -27,8 +28,8 @@ class LinearRegression(object):
 		max_iters=maximum number of iterations in gradient descent
 		inital_guess=point for minimazation to start with
 		"""
-		J = lambda t: LinearRegression.cost(self.X,self.y,t)
-		J_grad = lambda t: LinearRegression.cost_grad(self.X,self.y,t)
+		J = functools.partial(self.cost,self.X,self.y)
+		J_grad = functools.partial(self.cost_grad,self.X,self.y)
 		batch = gradient_descent.Batch(J,J_grad,rate,tolerance,max_iters)
 		self.minimization_trace = batch.minimize(inital_guess)
 		self.theta = self.minimization_trace[0]
@@ -43,9 +44,7 @@ class LinearRegression(object):
 		"""
 		x0 = np.insert(x0,0,1.0)
 		return np.dot(x0,self.theta)
-	@staticmethod
-	def cost(X, y, theta):
+	def cost(self, X, y, theta):
 		return sum((np.dot(X,theta)-y)**2)/(2.0*X.shape[0])
-	@staticmethod
-	def cost_grad(X, y, theta):
+	def cost_grad(self, X, y, theta):
 		return np.dot(X.T, (np.dot(X,theta)-y))/float(X.shape[0])
