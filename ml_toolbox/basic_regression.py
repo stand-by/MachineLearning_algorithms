@@ -11,3 +11,12 @@ class BasicRegression(object):
     def add_intercept(self):
 		self.X = np.insert(self.X,0,np.ones(self.m),1)
 		self.n += 1
+
+    def predict(self, x0):
+        raise NotImplementedError('subclasses have to override predict(self, x0)!')
+
+	def cost(self, X, y, theta):
+        raise NotImplementedError('subclasses have to override cost(self, X, y, theta)!')
+
+	def cost_grad(self, X, y, theta):
+        raise NotImplementedError('subclasses have to override cost_grad(self, X, y, theta)!')
