@@ -21,6 +21,7 @@ class LinearRegression(object):
 		self.minimization_trace = None
 		self.m, self.n = self.X.shape
 		self.X = np.insert(self.X,0,np.ones(self.m),1)
+		self.n += 1
 	def train_batch(self, rate, tolerance, max_iters, inital_guess):
 		"""
 		rate=learning rate which will be used in gradient descent
