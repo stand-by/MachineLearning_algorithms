@@ -19,3 +19,13 @@ def split_dataset_train_cv_test(X):
 	train, cv_test = split_dataset(X,0.6)
 	cv, test = split_dataset(cv_test,0.5)
 	return (train, cv, test)
+
+def readfile(filename, separator=','):
+	dataset = []
+	f = open(filename)
+	for line in f:
+		row = line.rstrip().split(separator)
+		if row==['']: continue
+		lst = [float(word) for word in row]
+		dataset.append(lst)
+	return dataset
