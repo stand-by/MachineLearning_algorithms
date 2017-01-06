@@ -1,5 +1,5 @@
 from ml_toolbox.basic_regression import BasicRegression
-import ml_toolbox.gradient_descent
+from ml_toolbox import gradient_descent
 import functools
 import numpy as np
 
