@@ -1,6 +1,9 @@
 import numpy as np
 
 class BasicRegression(object):
+    """
+    BasicRegression class provides all necessary methods and interfaces for any regression class
+    """
     def __init__(self, data_table, answers):
     	self.X = data_table
     	self.y = answers
